@@ -65,6 +65,7 @@ RUN echo 'opcache.enable=1' >> /etc/php/8.1/apache2/conf.d/10-opcache.ini \
 WORKDIR /tmp
 RUN wget https://github.com/movabletype/movabletype/archive/refs/heads/develop.zip \
     && unzip develop.zip \
+    && mkdir -p /var/www/cgi-bin \
     && mv movabletype-develop /var/www/cgi-bin/mt \
     && chown -R www-data:www-data /var/www/cgi-bin/mt \
     && chmod -R 755 /var/www/cgi-bin/mt
