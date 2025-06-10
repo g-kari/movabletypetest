@@ -50,7 +50,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Apache モジュールの有効化
-RUN a2enmod rewrite cgi perl php8.1 ssl headers
+RUN a2enmod rewrite cgi perl php8.1 ssl headers expires deflate
 
 # PHP OPcacheの有効化と設定
 RUN echo 'opcache.enable=1' >> /etc/php/8.1/apache2/conf.d/10-opcache.ini \
@@ -63,7 +63,7 @@ RUN echo 'opcache.enable=1' >> /etc/php/8.1/apache2/conf.d/10-opcache.ini \
 
 # MovableType 最新版のダウンロードとインストール
 WORKDIR /tmp
-RUN wget https://github.com/movabletype/movabletype/archive/refs/heads/develop.zip \
+RUN wget --no-check-certificate https://github.com/movabletype/movabletype/archive/refs/heads/develop.zip \
     && unzip develop.zip \
     && mkdir -p /var/www/cgi-bin \
     && mv movabletype-develop /var/www/cgi-bin/mt \
