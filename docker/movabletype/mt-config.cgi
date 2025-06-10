@@ -21,7 +21,7 @@ MemcachedNamespace mt
 MemcachedServers redis:6379
 
 # セキュリティ設定
-CookieSecret MovableTypeCookieSecret2024
+CookieSecret <%= ENV['MT_COOKIE_SECRET'] %>
 DBUmask 0022
 
 # 言語設定
