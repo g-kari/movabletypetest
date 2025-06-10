@@ -1,25 +1,31 @@
-# CakePHP 3
+# MovableType Files
+/mt/*
+!/mt/.gitkeep
+/mt-static/*
+!/mt-static/.gitkeep
+/uploads/*
+!/uploads/.gitkeep
 
-/vendor/*
-/config/app.php
+# Docker volumes
+/mysql_data/
+/redis_data/
 
-/tmp/cache/models/*
-!/tmp/cache/models/empty
-/tmp/cache/persistent/*
-!/tmp/cache/persistent/empty
-/tmp/cache/views/*
-!/tmp/cache/views/empty
-/tmp/sessions/*
-!/tmp/sessions/empty
-/tmp/tests/*
-!/tmp/tests/empty
-
+# Logs
 /logs/*
-!/logs/empty
+!/logs/.gitkeep
 
-# CakePHP 2
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*.swo
+*~
 
-/app/tmp/*
-/app/Config/core.php
-/app/Config/database.php
-/vendors/*
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
