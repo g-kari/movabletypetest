@@ -150,16 +150,16 @@ else
     echo "❌ HTTP ポート (8080) が設定されていません"
 fi
 
-if docker compose config | grep -q "published: \"3306\""; then
-    echo "✅ MySQL ポート (3306) が設定されています"
+if docker compose config | grep -q "published: \"3307\""; then
+    echo "✅ MySQL ポート (3307) が設定されています"
 else
-    echo "❌ MySQL ポート (3306) が設定されていません"
+    echo "❌ MySQL ポート (3307) が設定されていません"
 fi
 
-if docker compose config | grep -q "published: \"6379\""; then
-    echo "✅ Redis ポート (6379) が設定されています"
+if docker compose config | grep -q "published: \"6380\""; then
+    echo "✅ Redis ポート (6380) が設定されています"
 else
-    echo "❌ Redis ポート (6379) が設定されていません"
+    echo "❌ Redis ポート (6380) が設定されていません"
 fi
 
 echo ""
