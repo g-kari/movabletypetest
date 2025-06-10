@@ -32,6 +32,7 @@ RUN apt-get update && apt-get install -y \
     libjson-perl \
     libcrypt-cbc-perl \
     libcrypt-des-ede3-perl \
+    imagemagick \
     php8.1 \
     libapache2-mod-php8.1 \
     php8.1-mysql \
@@ -40,6 +41,8 @@ RUN apt-get update && apt-get install -y \
     php8.1-mbstring \
     php8.1-curl \
     php8.1-zip \
+    php8.1-imagick \
+    php8.1-opcache \
     curl \
     wget \
     unzip \
@@ -48,6 +51,15 @@ RUN apt-get update && apt-get install -y \
 
 # Apache モジュールの有効化
 RUN a2enmod rewrite cgi perl php8.1 ssl headers
+
+# PHP OPcacheの有効化と設定
+RUN echo 'opcache.enable=1' >> /etc/php/8.1/apache2/conf.d/10-opcache.ini \
+    && echo 'opcache.enable_cli=1' >> /etc/php/8.1/apache2/conf.d/10-opcache.ini \
+    && echo 'opcache.memory_consumption=128' >> /etc/php/8.1/apache2/conf.d/10-opcache.ini \
+    && echo 'opcache.interned_strings_buffer=8' >> /etc/php/8.1/apache2/conf.d/10-opcache.ini \
+    && echo 'opcache.max_accelerated_files=4000' >> /etc/php/8.1/apache2/conf.d/10-opcache.ini \
+    && echo 'opcache.revalidate_freq=2' >> /etc/php/8.1/apache2/conf.d/10-opcache.ini \
+    && echo 'opcache.fast_shutdown=1' >> /etc/php/8.1/apache2/conf.d/10-opcache.ini
 
 # MovableType 最新版のダウンロードとインストール
 WORKDIR /tmp
