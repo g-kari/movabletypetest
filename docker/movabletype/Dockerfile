@@ -68,7 +68,8 @@ RUN wget --no-check-certificate https://github.com/movabletype/movabletype/archi
     && mkdir -p /var/www/cgi-bin \
     && mv movabletype-develop /var/www/cgi-bin/mt \
     && chown -R www-data:www-data /var/www/cgi-bin/mt \
-    && chmod -R 755 /var/www/cgi-bin/mt
+    && chmod -R 755 /var/www/cgi-bin/mt \
+    && cp -r /var/www/cgi-bin/mt /tmp/movabletype-backup
 
 # 静的ファイルディレクトリの作成
 RUN mkdir -p /var/www/html/mt-static \
