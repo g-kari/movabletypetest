@@ -1,0 +1,3 @@
+# MovableType Files Directory
+# MovableType のファイルはDocker起動時に自動的にここに配置されます
+# This directory will be populated with MovableType files during Docker startup
