@@ -5,8 +5,8 @@
 echo "🚀 MovableType Docker環境を起動しています..."
 
 # Docker Composeファイルの存在確認
-if [ ! -f "docker compose.yml" ]; then
-    echo "❌ docker compose.yml が見つかりません。"
+if [ ! -f "docker-compose.yml" ]; then
+    echo "❌ docker-compose.yml が見つかりません。"
     echo "   プロジェクトのルートディレクトリから実行してください。"
     exit 1
 fi
