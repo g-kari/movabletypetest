@@ -19,7 +19,7 @@ help:
 start:
 	@echo "🚀 MovableType環境を起動しています..."
 	docker compose up -d
-	@echo "✅ 起動完了！ http://localhost/cgi-bin/mt/mt.cgi"
+	@echo "✅ 起動完了！ http://localhost:8080/cgi-bin/mt/mt.cgi"
 
 # 環境停止
 stop:

@@ -31,8 +31,8 @@ docker compose up -d
 ```
 
 3. ブラウザでアクセス:
-- MovableType管理画面: http://localhost/cgi-bin/mt/mt.cgi
-- サイト: http://localhost/
+- MovableType管理画面: http://localhost:8080/cgi-bin/mt/mt.cgi
+- サイト: http://localhost:8080/
 
 ### 初回セットアップ
 
@@ -47,7 +47,7 @@ docker compose up -d
 ## 🔧 サービス詳細
 
 ### MovableType (Webアプリケーション)
-- **ポート**: 80, 443
+- **ポート**: 8080, 443
 - **CGIパス**: `/cgi-bin/mt/`
 - **静的ファイル**: `/mt-static/`
 - **アップロード**: `/uploads/`
@@ -159,7 +159,7 @@ docker compose restart movabletype
 ### よくある問題
 
 1. **ポート競合エラー**:
-   - 他のサービスがポート80、3306、6379を使用していないか確認
+   - 他のサービスがポート8080、3306、6379を使用していないか確認
 
 2. **権限エラー**:
    - `uploads/` ディレクトリの権限を確認

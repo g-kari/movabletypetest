@@ -144,19 +144,19 @@ echo ""
 # 6. ポート設定の確認
 echo "🔌 ポート設定の確認:"
 
-if docker compose config | grep -q "published: 80"; then
-    echo "✅ HTTP ポート (80) が設定されています"
+if docker compose config | grep -q "published: \"8080\""; then
+    echo "✅ HTTP ポート (8080) が設定されています"
 else
-    echo "❌ HTTP ポート (80) が設定されていません"
+    echo "❌ HTTP ポート (8080) が設定されていません"
 fi
 
-if docker compose config | grep -q "published: 3306"; then
+if docker compose config | grep -q "published: \"3306\""; then
     echo "✅ MySQL ポート (3306) が設定されています"
 else
     echo "❌ MySQL ポート (3306) が設定されていません"
 fi
 
-if docker compose config | grep -q "published: 6379"; then
+if docker compose config | grep -q "published: \"6379\""; then
     echo "✅ Redis ポート (6379) が設定されています"
 else
     echo "❌ Redis ポート (6379) が設定されていません"
@@ -167,7 +167,7 @@ echo "🎉 全ての基本テストがパスしました！"
 echo ""
 echo "💡 次のステップ:"
 echo "   1. ./start.sh でサービスを起動"
-echo "   2. http://localhost/cgi-bin/mt/mt.cgi にアクセス"
+echo "   2. http://localhost:8080/cgi-bin/mt/mt.cgi にアクセス"
 echo "   3. セットアップウィザードを実行"
 echo ""
 echo "📊 サービス起動後の確認コマンド:"
