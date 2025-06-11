@@ -122,6 +122,20 @@ else
     exit 1
 fi
 
+if grep -q "MailTransfer sendmail" docker/movabletype/mt-config.cgi; then
+    echo "✅ MovableType設定: Sendmail設定が正しいです"
+else
+    echo "❌ MovableType設定: Sendmail設定が見つかりません"
+    exit 1
+fi
+
+if grep -q "SendMailPath /usr/sbin/sendmail" docker/movabletype/mt-config.cgi; then
+    echo "✅ MovableType設定: Sendmailパス設定が正しいです"
+else
+    echo "❌ MovableType設定: Sendmailパス設定が見つかりません"
+    exit 1
+fi
+
 echo ""
 
 # 5. Docker Composeサービスの確認
