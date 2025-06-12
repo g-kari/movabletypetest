@@ -1,6 +1,9 @@
 # MovableType Files
 /mt/*
 !/mt/.gitkeep
+!/mt/plugins/
+/mt/plugins/*
+!/mt/plugins/CloudFrontClearCaches/
 /mt-static/*
 !/mt-static/.gitkeep
 /uploads/*

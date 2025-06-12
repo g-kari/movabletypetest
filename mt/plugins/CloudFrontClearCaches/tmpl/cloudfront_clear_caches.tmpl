@@ -1,0 +1,55 @@
+<mt:setvarblock name="page_title">CloudFront Cache Clear</mt:setvarblock>
+
+<mt:include name="include/header.tmpl">
+
+<div class="listing-header">
+    <div class="listing-header-title">
+        <h2>CloudFront Cache Clear</h2>
+    </div>
+</div>
+
+<mt:if name="config_incomplete">
+<div class="alert alert-warning">
+    <strong>警告:</strong> CloudFrontの設定が不完全です。<br>
+    システムメニューの「プラグイン設定」でCloudFrontの設定を完了してください。
+    <ul>
+        <li>CloudFront Distribution ID</li>
+        <li>AWS Access Key ID</li>
+        <li>AWS Secret Access Key</li>
+        <li>AWS Region</li>
+    </ul>
+</div>
+<mt:else>
+<div class="alert alert-info">
+    <strong>CloudFront設定確認:</strong><br>
+    Distribution ID: <code><mt:var name="distribution_id" escape="html"></code><br>
+    Access Key ID: <code><mt:var name="access_key_id" escape="html"></code><br>
+    Region: <code><mt:var name="region" escape="html"></code>
+</div>
+</mt:else>
+
+<form method="post" action="<mt:var name="script_url">">
+    <input type="hidden" name="__mode" value="do_clear_cloudfront_caches">
+    <input type="hidden" name="magic_token" value="<mt:var name="magic_token">">
+    
+    <div class="form-group">
+        <p>すべてのCloudFrontキャッシュを無効化します。この操作には数分かかる場合があります。</p>
+        
+        <mt:unless name="config_incomplete">
+        <button type="submit" class="btn btn-primary">
+            キャッシュをクリア
+        </button>
+        </mt:unless>
+        
+        <a href="<mt:var name="script_url">?__mode=cfg_plugins" class="btn btn-secondary">
+            プラグイン設定
+        </a>
+    </div>
+</form>
+
+<div class="form-group">
+    <h3>自動キャッシュクリア設定</h3>
+    <p>記事やページの公開時に自動的にキャッシュをクリアする場合は、プラグイン設定で「Auto Invalidate on Publish」を有効にしてください。</p>
+</div>
+
+<mt:include name="include/footer.tmpl">
