@@ -221,7 +221,7 @@ CGI パス: /var/www/cgi-bin/mt/
 
 1. **バックアップの設定**: [バックアップの作成](#バックアップの作成)を参照
 2. **セキュリティ設定**: [セキュリティ](#🔒-セキュリティ)セクションを参照
-3. **プラグインインストール**: [カスタムプラグインの追加](#カスタムプラグインの追加)を参照
+3. **プラグインインストール**: [推奨プラグイン](#推奨プラグイン)と[カスタムプラグインの追加](#カスタムプラグインの追加)を参照
 
 ## 📊 サービス詳細
 
@@ -447,6 +447,111 @@ docker compose down -v --rmi all
 1. プラグインファイルを `mt/plugins/` に配置
 2. 権限を設定: `chmod -R 755 mt/plugins/`
 3. MovableTypeを再起動: `docker compose restart movabletype`
+
+### 推奨プラグイン
+
+MovableTypeの機能を拡張するための推奨プラグインをご紹介します。これらのプラグインは一般的によく使用され、ブログやウェブサイトの運営に役立ちます。
+
+#### 🔍 SEO・アクセス解析系
+
+**PowerCMS Professional**
+- **概要**: SEO最適化、高度な記事管理機能を提供
+- **用途**: 企業サイト、本格的なCMS運用
+- **インストール**: [公式サイト](https://www.powercms.org/)からダウンロード
+
+**Google Analytics Plugin**
+- **概要**: Google Analyticsの簡単な設定と統計表示
+- **用途**: アクセス解析、トラッキングコード管理
+- **インストール**: 
+  ```bash
+  # プラグインをダウンロード後
+  cp -r GoogleAnalytics/ mt/plugins/
+  chmod -R 755 mt/plugins/GoogleAnalytics/
+  docker compose restart movabletype
+  ```
+
+#### 🛡️ セキュリティ・スパム対策
+
+**TypePad AntiSpam**
+- **概要**: スパムコメント・トラックバックの自動検出・ブロック
+- **用途**: コメントスパム対策
+- **特徴**: Six Apart社公式のスパム対策プラグイン
+- **インストール**: MovableTypeに標準で含まれている場合があります
+
+**reCAPTCHA Plugin**
+- **概要**: Google reCAPTCHAを使用したボット対策
+- **用途**: コメントフォーム、お問い合わせフォームの保護
+- **インストール**:
+  ```bash
+  # プラグインをダウンロード後
+  cp -r reCAPTCHA/ mt/plugins/
+  chmod -R 755 mt/plugins/reCAPTCHA/
+  docker compose restart movabletype
+  ```
+
+#### 📝 コンテンツ管理・編集
+
+**TinyMCE Plugin**
+- **概要**: リッチテキストエディタの高機能化
+- **用途**: 記事編集の利便性向上
+- **特徴**: WYSIWYG編集、画像挿入、表作成など
+
+**CustomFields**
+- **概要**: カスタムフィールドの追加・管理
+- **用途**: 記事に独自の項目を追加
+- **インストール**:
+  ```bash
+  cp -r CustomFields/ mt/plugins/
+  chmod -R 755 mt/plugins/CustomFields/
+  docker compose restart movabletype
+  ```
+
+#### 🖼️ メディア・画像管理
+
+**ImageCropper**
+- **概要**: 画像のトリミング・リサイズ機能
+- **用途**: アップロード画像の最適化
+- **特徴**: 自動リサイズ、複数サイズ生成
+
+**AssetGallery**
+- **概要**: 画像ギャラリー機能の追加
+- **用途**: 画像一覧表示、スライドショー
+
+#### 📱 ソーシャル・共有
+
+**SocialBookmarks**
+- **概要**: ソーシャルメディア共有ボタンの追加
+- **用途**: Twitter、Facebook等での記事共有促進
+- **インストール**:
+  ```bash
+  cp -r SocialBookmarks/ mt/plugins/
+  chmod -R 755 mt/plugins/SocialBookmarks/
+  docker compose restart movabletype
+  ```
+
+#### 🔧 システム・運用支援
+
+**ConfigAssistant**
+- **概要**: テーマ設定の簡単化
+- **用途**: 色やレイアウトの変更を管理画面から実行
+
+**Backup/Restore Plugin**
+- **概要**: 管理画面からのバックアップ・復元
+- **用途**: 定期バックアップ、サイト移転
+
+#### 📋 インストール時の注意事項
+
+1. **互換性確認**: MovableTypeのバージョンとプラグインの対応を確認
+2. **テスト環境**: 本番環境にインストールする前にテスト環境で動作確認
+3. **バックアップ**: プラグインインストール前は必ずバックアップを取得
+4. **権限設定**: プラグインディレクトリの権限設定を忘れずに実行
+5. **再起動**: プラグインインストール後はMovableTypeの再起動を実行
+
+#### 🔗 プラグイン配布サイト
+
+- [MovableType.org Plugins](https://plugins.movabletype.org/)
+- [Six Apart Plugin Directory](https://plugins.sixapart.com/)
+- [GitHub - MovableType関連](https://github.com/topics/movabletype)
 
 ### テーマの追加
 
