@@ -1,0 +1,57 @@
+id: CloudFrontClearCaches
+name: CloudFront Clear Caches
+version: 1.0.0
+description: AWS CloudFrontのキャッシュを自動的にクリアするプラグイン
+author_name: G-Kari
+author_link: https://github.com/g-kari
+plugin_link: https://github.com/g-kari/movabletypetest
+doc_link: https://github.com/g-kari/movabletypetest
+
+config_settings:
+  CloudFrontDistributionID:
+    type: TEXTINPUT
+    label: 'CloudFront Distribution ID'
+    hint: 'CloudFrontディストリビューションのIDを入力してください'
+    default: ''
+    required: 1
+  CloudFrontAccessKeyID:
+    type: TEXTINPUT
+    label: 'AWS Access Key ID'
+    hint: 'CloudFrontにアクセスするためのAWS Access Key IDを入力してください'
+    default: ''
+    required: 1
+  CloudFrontSecretAccessKey:
+    type: TEXTINPUT
+    label: 'AWS Secret Access Key'
+    hint: 'CloudFrontにアクセスするためのAWS Secret Access Keyを入力してください'
+    default: ''
+    required: 1
+  CloudFrontRegion:
+    type: TEXTINPUT
+    label: 'AWS Region'
+    hint: 'AWSリージョンを入力してください (例: us-east-1)'
+    default: 'us-east-1'
+    required: 1
+  CloudFrontAutoInvalidate:
+    type: CHECKBOX
+    label: 'Auto Invalidate on Publish'
+    hint: '記事やページの公開時に自動的にキャッシュをクリアします'
+    default: 1
+
+callbacks:
+  cms_post_save.entry: $CloudFrontClearCaches::CloudFrontClearCaches::Callback::invalidate_on_save
+  cms_post_save.page: $CloudFrontClearCaches::CloudFrontClearCaches::Callback::invalidate_on_save
+  rebuild: $CloudFrontClearCaches::CloudFrontClearCaches::Callback::invalidate_on_rebuild
+
+applications:
+  cms:
+    menus:
+      tools:
+        cloudfront_clear_caches:
+          label: 'CloudFront Cache Clear'
+          order: 900
+          mode: 'cloudfront_clear_caches'
+          permission: administer
+    methods:
+      cloudfront_clear_caches: $CloudFrontClearCaches::CloudFrontClearCaches::CMS::clear_caches_mode
+      do_clear_cloudfront_caches: $CloudFrontClearCaches::CloudFrontClearCaches::CMS::do_clear_caches
