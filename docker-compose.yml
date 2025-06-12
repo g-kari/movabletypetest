@@ -39,6 +39,7 @@ services:
       - ./mt:/var/www/cgi-bin/mt
       - ./mt-static:/var/www/html/mt-static
       - ./uploads:/var/www/html/uploads
+      - ./themes:/var/www/html/themes
       - ./docker/apache/sites-available:/etc/apache2/sites-available
       - ./docker/apache/conf-available:/etc/apache2/conf-available
     ports:

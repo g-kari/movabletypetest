@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><$mt:BlogName$> <$mt:if name="page_title">- <$mt:var name="page_title"$></$mt:if></title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="<$mt:BlogDescription$>">
+    <meta name="keywords" content="<$mt:BlogKeywords$>">
+    
+    <!-- Vue.js Template Assets -->
+    <link rel="stylesheet" href="<$mt:StaticWebPath$>themes/vue-template/assets/main.css">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="<$mt:BlogName$>">
+    <meta property="og:description" content="<$mt:BlogDescription$>">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<$mt:BlogURL$>">
+    
+    <!-- MovableType Style -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8f9fa;
+        }
+        
+        .mt-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .mt-content {
+            flex: 1;
+            padding: 20px 0;
+        }
+        
+        .mt-footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="mt-container">
+        <!-- Vue.js Navigation Component -->
+        <div id="vue-navigation" 
+             data-menu='[
+                {"id": 1, "label": "ホーム", "url": "<$mt:BlogURL$>", "current": <$mt:if name="template_name" eq="index">true<$mt:else>false</$mt:if>},
+                {"id": 2, "label": "ブログ", "url": "<$mt:BlogURL$>", "current": <$mt:if name="template_name" eq="main_index">true<$mt:else>false</$mt:if>},
+                {"id": 3, "label": "アーカイブ", "url": "<$mt:BlogURL$>archives.html", "current": false},
+                {"id": 4, "label": "RSS", "url": "<$mt:BlogURL$>index.xml", "current": false}
+             ]'>
+            <!-- Fallback navigation for non-JavaScript users -->
+            <nav style="background: #fff; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                <a href="<$mt:BlogURL$>" style="font-weight: bold; text-decoration: none; color: #2c3e50;"><$mt:BlogName$></a>
+                <span style="margin: 0 15px;">|</span>
+                <a href="<$mt:BlogURL$>" style="text-decoration: none; color: #555;">ホーム</a>
+                <span style="margin: 0 15px;">|</span>
+                <a href="<$mt:BlogURL$>archives.html" style="text-decoration: none; color: #555;">アーカイブ</a>
+            </nav>
+        </div>
+        
+        <div class="mt-content">
+            <$mt:Include module="コンテンツ"$>
+        </div>
+        
+        <footer class="mt-footer">
+            <p>&copy; <$mt:Date format="%Y"$> <$mt:BlogName$>. Powered by MovableType + Vue.js</p>
+        </footer>
+    </div>
+    
+    <!-- Vue.js Template Script -->
+    <script src="<$mt:StaticWebPath$>themes/vue-template/assets/main.js"></script>
+</body>
+</html>

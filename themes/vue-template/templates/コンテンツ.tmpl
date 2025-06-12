@@ -1,0 +1,71 @@
+<$mt:setvar name="page_title" value="ブログ記事一覧"$>
+
+<div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+    <!-- Vue.js Blog Posts Component -->
+    <div id="vue-blog-posts" 
+         data-posts='[
+            <$mt:Entries>
+            {
+                "id": "<$mt:EntryID$>",
+                "title": "<$mt:EntryTitle encode_json="1"$>",
+                "permalink": "<$mt:EntryPermalink$>",
+                "created_on": "<$mt:EntryDate format_name="iso8601"$>",
+                "author": "<$mt:EntryAuthorDisplayName encode_json="1"$>",
+                "category": "<$mt:EntryCategory encode_json="1"$>",
+                "excerpt": "<$mt:EntryExcerpt encode_json="1"$>",
+                "text": "<$mt:EntryBody encode_json="1" strip_linefeeds="1"$>",
+                "tags": [<$mt:EntryTags glue='","'>"<$mt:TagName encode_json="1"$>"</$mt:EntryTags>]
+            }<$mt:EntriesFooter>,</$mt:EntriesFooter>
+            </$mt:Entries>
+         ]'>
+        <!-- Fallback content for non-JavaScript users -->
+        <div style="margin: 20px 0;">
+            <h2 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px;">最新記事</h2>
+            
+            <$mt:Entries>
+            <article style="background: white; border: 1px solid #e1e8ed; border-radius: 8px; padding: 25px; margin-bottom: 25px;">
+                <header>
+                    <h3 style="margin: 0 0 10px 0;">
+                        <a href="<$mt:EntryPermalink$>" style="color: #2c3e50; text-decoration: none;"><$mt:EntryTitle$></a>
+                    </h3>
+                    <div style="color: #7f8c8d; font-size: 0.9em; margin-bottom: 15px;">
+                        <time datetime="<$mt:EntryDate format_name="iso8601"$>"><$mt:EntryDate$></time>
+                        <$mt:if name="author"> by <$mt:EntryAuthorDisplayName$></$mt:if>
+                        <$mt:if name="category"> in <$mt:EntryCategory$></$mt:if>
+                    </div>
+                </header>
+                
+                <div style="margin: 15px 0; line-height: 1.6;">
+                    <$mt:if name="excerpt">
+                        <$mt:EntryExcerpt$>
+                    <$mt:else>
+                        <$mt:EntryBody words="50"$>...
+                    </$mt:if>
+                </div>
+                
+                <footer style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee;">
+                    <a href="<$mt:EntryPermalink$>" style="color: #3498db; text-decoration: none;">続きを読む</a>
+                    <$mt:if name="tags">
+                        <div style="margin-top: 10px;">
+                            <$mt:EntryTags>
+                                <span style="background: #ecf0f1; color: #34495e; padding: 4px 8px; border-radius: 12px; font-size: 0.8em; margin-right: 8px;">#<$mt:TagName$></span>
+                            </$mt:EntryTags>
+                        </div>
+                    </$mt:if>
+                </footer>
+            </article>
+            <$mt:else>
+            <div style="text-align: center; color: #7f8c8d; font-style: italic; padding: 40px;">
+                記事がありません。
+            </div>
+            </$mt:Entries>
+        </div>
+    </div>
+    
+    <!-- Pagination -->
+    <$mt:IfMoreResults>
+    <div style="text-align: center; margin: 40px 0;">
+        <a href="<$mt:NextLink$>" style="background: #3498db; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px;">もっと見る</a>
+    </div>
+    </$mt:IfMoreResults>
+</div>

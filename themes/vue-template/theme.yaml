@@ -1,0 +1,39 @@
+id: vue-template
+name: Vue.js Template
+description: Modern Vue.js powered template for MovableType
+version: 1.0.0
+author: MovableType Vue Template
+thumbnail: vue-template-thumbnail.png
+
+elements:
+    main_index:
+        label: メインページ
+        
+    entry:
+        label: 記事ページ
+        
+    archives:
+        label: アーカイブ
+        
+    comments:
+        label: コメント
+
+templates:
+    main_index:
+        label: メインページテンプレート
+        type: index
+        outfile: index.html
+        
+    entry:
+        label: 記事ページテンプレート  
+        type: individual
+        outfile: <%EntryPermalink%>
+        
+    rss:
+        label: RSS Feed
+        type: index
+        outfile: index.xml
+
+static_files:
+    - assets/main.js
+    - assets/main.css
