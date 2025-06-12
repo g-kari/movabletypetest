@@ -50,6 +50,11 @@ RUN apt-get update && apt-get install -y \
     tzdata \
     && rm -rf /var/lib/apt/lists/*
 
+# Node.js 18.x のインストール（Vue.js開発用）
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install -g npm@latest
+
 # Apache モジュールの有効化
 RUN a2enmod rewrite cgi perl php8.1 ssl headers expires deflate
 
@@ -85,6 +90,11 @@ RUN mkdir -p /var/www/html/mt-static \
 RUN mkdir -p /var/www/html/uploads \
     && chown -R www-data:www-data /var/www/html/uploads \
     && chmod -R 755 /var/www/html/uploads
+
+# テーマディレクトリの作成
+RUN mkdir -p /var/www/html/themes \
+    && chown -R www-data:www-data /var/www/html/themes \
+    && chmod -R 755 /var/www/html/themes
 
 # MovableType設定ファイルの作成
 COPY docker/movabletype/mt-config.cgi /var/www/cgi-bin/mt/mt-config.cgi

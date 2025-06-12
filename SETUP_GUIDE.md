@@ -555,9 +555,28 @@ MovableTypeの機能を拡張するための推奨プラグインをご紹介し
 
 ### テーマの追加
 
+#### 標準的なテーマ
+
 1. テーマファイルを `mt/themes/` に配置
 2. 静的ファイルを `mt-static/themes/` に配置
 3. MovableTypeを再起動
+
+#### Vue.jsテンプレート
+
+Vue.js対応のモダンなテンプレートシステムを利用できます：
+
+1. Vue.jsテンプレートをビルド：
+```bash
+cd themes/vue-template
+./build.sh
+```
+
+2. MovableType管理画面でテーマを適用：
+   - デザイン > テンプレート セット
+   - "Vue.js Template" を選択
+   - テンプレートを適用してサイトを再構築
+
+詳細は [themes/vue-template/README.md](../themes/vue-template/README.md) を参照してください。
 
 ### バックアップの作成
 

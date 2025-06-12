@@ -1,6 +1,6 @@
 # MovableType Docker環境 管理用Makefile
 
-.PHONY: help start stop restart build logs clean reset
+.PHONY: help start stop restart build logs clean reset vue-build vue-dev vue-test
 
 # デフォルトタスク
 help:
@@ -13,6 +13,11 @@ help:
 	@echo "  make logs      - ログを表示"
 	@echo "  make clean     - 停止してイメージを削除"
 	@echo "  make reset     - 完全リセット（データも削除）"
+	@echo ""
+	@echo "Vue.js Template コマンド:"
+	@echo "  make vue-build - Vue.jsテンプレートをビルド"
+	@echo "  make vue-dev   - Vue.js開発サーバーを起動"
+	@echo "  make vue-test  - Vue.jsテンプレートをテスト"
 	@echo ""
 
 # 環境起動
@@ -61,3 +66,16 @@ dev-redis:
 
 dev-shell:
 	docker compose exec movabletype /bin/bash
+
+# Vue.js Template コマンド
+vue-build:
+	@echo "🔨 Vue.jsテンプレートをビルドしています..."
+	cd themes/vue-template && ./build.sh
+
+vue-dev:
+	@echo "🚀 Vue.js開発サーバーを起動しています..."
+	cd themes/vue-template && npm run dev
+
+vue-test:
+	@echo "🔍 Vue.jsテンプレートをテストしています..."
+	cd themes/vue-template && ./test.sh
