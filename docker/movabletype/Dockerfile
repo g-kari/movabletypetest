@@ -43,6 +43,7 @@ RUN apt-get update && apt-get install -y \
     php8.1-zip \
     php8.1-imagick \
     php8.1-opcache \
+    sendmail \
     curl \
     wget \
     unzip \
@@ -51,6 +52,9 @@ RUN apt-get update && apt-get install -y \
 
 # Apache モジュールの有効化
 RUN a2enmod rewrite cgi perl php8.1 ssl headers expires deflate
+
+# Sendmail のインストール確認
+RUN which sendmail
 
 # PHP OPcacheの有効化と設定
 RUN echo 'opcache.enable=1' >> /etc/php/8.1/apache2/conf.d/10-opcache.ini \
