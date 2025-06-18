@@ -14,12 +14,13 @@ CGIPath /cgi-bin/mt/
 StaticWebPath /mt-static/
 StaticFilePath /var/www/html/mt-static/
 
-Database mysql
+# Database configuration
+ObjectDriver DBI::mysql
+Database mt
 DBUser mt
 DBPassword movabletype
 DBHost mysql
 DBPort 3306
-DBName mt
 
 DefaultLanguage ja
 DefaultTimezone +09:00
@@ -39,6 +40,9 @@ SendMailPath /usr/sbin/sendmail
 
 # Performance settings
 ProcessMemoryCommand /bin/ps -o rss=
+
+# Debug settings
+DebugMode 2
 EOF
 
 # Set proper permissions
