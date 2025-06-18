@@ -175,6 +175,14 @@ docker compose restart movabletype
 docker compose restart movabletype
 ```
 
+### プラグイン開発
+
+MovableTypeプラグインの開発方法については、包括的な日本語ガイドを用意しています：
+
+- **[MovableType プラグイン開発ガイド](MOVABLETYPE_PLUGIN_DEVELOPMENT_GUIDE.md)** - プラグイン開発の基礎から実践まで
+- プラグインファイルは `mt/plugins/` ディレクトリに配置
+- 実例として `ShadowverseDeckBuilder` と `CloudFrontClearCaches` プラグインを参照可能
+
 ## 🆘 トラブルシューティング
 
 ### よくある問題
@@ -211,6 +219,12 @@ MovableType自体は Six Apart社の製品であり、別途ライセンスが�
 
 ## 🔗 関連リンク
 
+### プロジェクト関連ドキュメント
+- [MovableType プラグイン開発ガイド](MOVABLETYPE_PLUGIN_DEVELOPMENT_GUIDE.md) - 包括的なプラグイン開発日本語ドキュメント
+- [セットアップガイド](SETUP_GUIDE.md) - 詳細なセットアップ手順
+- [Shadowverse プラグインガイド](SHADOWVERSE_PLUGIN_GUIDE.md) - 実践的なプラグイン開発例
+
+### 公式ドキュメント
 - [MovableType公式サイト](https://www.movabletype.org/)
 - [MovableType開発者ドキュメント](https://www.movabletype.org/documentation/)
 - [Docker公式ドキュメント](https://docs.docker.com/)
