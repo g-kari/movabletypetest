@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import BlogPosts from './components/BlogPosts.vue'
 import Navigation from './components/Navigation.vue'
+import DeckEditor from './components/DeckEditor.vue'
 
 // MovableType Vue Template システム
 class MTVueTemplate {
@@ -35,6 +36,15 @@ class MTVueTemplate {
   mountMainApp(selector) {
     return this.mount(selector, App)
   }
+
+  // デッキエディターのマウント
+  mountDeckEditor(selector, deckData = null) {
+    return this.mount(selector, DeckEditor, { 
+      initialDeck: deckData,
+      allCards: window.svDeckData?.allCards || [],
+      savedCards: window.svDeckData?.cards || []
+    })
+  }
 }
 
 // グローバルに公開
@@ -61,5 +71,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (navigationElement) {
     const menuData = navigationElement.dataset.menu ? JSON.parse(navigationElement.dataset.menu) : []
     window.MTVueTemplate.mountNavigation('#vue-navigation', menuData)
+  }
+
+  // デッキエディターの自動マウント
+  const deckEditorElement = document.querySelector('#sv-deck-editor')
+  if (deckEditorElement && window.svDeckData) {
+    window.MTVueTemplate.mountDeckEditor('#sv-deck-editor', window.svDeckData)
   }
 })
