@@ -19,7 +19,9 @@
 - Docker Engine 20.10+
 - Docker Compose 2.0+
 
-### 起動方法
+### 🎯 **推奨**: 自動セットアップスクリプトを使用
+
+最も簡単で確実な方法は、提供されている自動セットアップスクリプトを使用することです：
 
 1. リポジトリをクローン:
 ```bash
@@ -27,24 +29,48 @@ git clone https://github.com/g-kari/movabletypetest.git
 cd movabletypetest
 ```
 
-2. Docker Composeで起動:
+2. **自動セットアップスクリプトを実行**:
+```bash
+./setup.sh
+```
+
+このスクリプトは以下を自動で行います：
+- Docker サービスの起動
+- Apache設定の修正（デフォルトページ問題の解決）
+- MovableType設定の初期化
+- データベースの初期化
+- ShadowverseDeckBuilderプラグインの設定
+- サンプルデータの挿入
+- Vue.jsコンポーネントの修正
+
+### 手動セットアップ（上級者向け）
+
+自動セットアップを使わない場合：
+
+1. Docker Composeで起動:
 ```bash
 docker compose up -d
 ```
 
-3. ブラウザでアクセス:
-- MovableType管理画面: http://localhost:8080/cgi-bin/mt/mt.cgi
+2. ブラウザでアクセス:
+- MovableType管理画面: http://localhost:8080/mt/mt.cgi
 - サイト: http://localhost:8080/
 
 ### 初回セットアップ
 
+自動セットアップスクリプトを使用した場合：
+- **管理画面**: http://localhost:8080/mt/mt.cgi
+- **ユーザー名**: admin
+- **パスワード**: password
+
+手動セットアップの場合：
 1. MovableType管理画面にアクセス
 2. セットアップウィザードに従って設定
-3. データベース接続情報は以下の通り:
-   - データベースサーバー: `mysql`
-   - データベース名: `mt`
-   - ユーザー名: `mt`
-   - パスワード: `movabletype`
+3. データベース接続情報:
+   - データベースサーバー: `db`
+   - データベース名: `movabletype`
+   - ユーザー名: `movabletype`
+   - パスワード: `password`
 
 📋 **詳細なブラウザセットアップ手順**: `SETUP_GUIDE.md`の[ブラウザセットアップガイド](SETUP_GUIDE.md#🌐-ブラウザセットアップガイド)を参照してください。
 
@@ -185,26 +211,70 @@ MovableTypeプラグインの開発方法については、包括的な日本語
 
 ## 🆘 トラブルシューティング
 
-### よくある問題
+### 🔧 自動修復
 
-1. **ポート競合エラー**:
+問題が発生した場合は、まず自動セットアップスクリプトを再実行してください：
+
+```bash
+./setup.sh
+```
+
+### よくある問題と解決方法
+
+1. **Apacheデフォルトページが表示される**:
+   - 📋 **解決法**: 自動セットアップスクリプトを実行
+   - 手動修復: `docker-compose exec mt rm -f /var/www/html/index.html && docker-compose restart`
+
+2. **"svdeckをロードできません" エラー**:
+   - 📋 **解決法**: 自動セットアップスクリプトを実行
+   - 原因: プラグイン設定の問題またはデータベーステーブル未作成
+
+3. **Vue.js deck builder component failed to load**:
+   - 📋 **解決法**: 自動セットアップスクリプトを実行（Vue.js依存を解決した軽量版に置き換え）
+   - 代替方法: 手動でのカード入力機能を使用
+
+4. **ポート競合エラー**:
    - 他のサービスがポート8080、3307、6380を使用していないか確認
+   - `docker ps` で使用中のポートを確認
 
-2. **権限エラー**:
+5. **権限エラー**:
    - `uploads/` ディレクトリの権限を確認
+   - `docker-compose exec mt chown -R www-data:www-data /var/www/html`
 
-3. **データベース接続エラー**:
-   - MySQLサービスが起動しているか確認
-   - `docker compose logs mysql` でログを確認
+6. **データベース接続エラー**:
+   - MySQLサービスが起動しているか確認: `docker-compose logs db`
+   - サービス再起動: `docker-compose restart db`
 
-### リセット方法
+### 🚨 完全リセット方法
 
 全データを削除して初期状態に戻す:
 
 ```bash
-docker compose down -v
-docker compose up -d
+docker-compose down -v
+docker system prune -f
+./setup.sh
 ```
+
+### 🔍 詳細ログの確認
+
+```bash
+# 全サービスのログ
+docker-compose logs -f
+
+# 特定のサービスのログ
+docker-compose logs -f mt
+docker-compose logs -f db
+
+# MovableTypeエラーログ
+docker-compose exec mt tail -f /tmp/mt.log
+```
+
+### 💡 追加のヘルプ
+
+問題が解決しない場合：
+1. `docker-compose ps` でサービス状態を確認
+2. `docker-compose exec mt ls -la /var/www/html` でファイル権限を確認
+3. `docker-compose exec db mysql -u movabletype -ppassword movabletype -e "SHOW TABLES;"` でデータベーステーブルを確認
 
 ## 📜 ライセンス
 

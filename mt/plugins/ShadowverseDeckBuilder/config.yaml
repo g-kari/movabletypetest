@@ -10,34 +10,8 @@ doc_link: https://github.com/g-kari/movabletypetest
 schema_version: 1.0
 
 object_types:
-  svcard:
-    card_id: string(50) not null
-    name: string(255) not null
-    name_en: string(255)
-    cost: integer not null
-    attack: integer
-    life: integer
-    type: string(20) not null
-    class: string(20) not null
-    rarity: string(20) not null
-    set_name: string(100)
-    description: text
-    image_url: string(500)
-    
-  svdeck:
-    title: string(255) not null
-    description: text
-    class: string(20) not null
-    class_jp: string(20) not null
-    cards_data: text not null
-    author_id: integer not null
-    author_name: string(255) not null
-    is_public: integer not null default 0
-    share_token: string(32)
-    view_count: integer not null default 0
-    like_count: integer not null default 0
-    created_on: datetime not null
-    modified_on: datetime not null
+  svcard: ShadowverseDeckBuilder::SVCard
+  svdeck: ShadowverseDeckBuilder::SVDeck
 
 callbacks:
   MT::App::CMS::init_request: $ShadowverseDeckBuilder::ShadowverseDeckBuilder::Callback::cms_init_request

@@ -6,7 +6,7 @@ use warnings;
 sub cms_init_request {
     my ($cb, $app) = @_;
     
-    # Add routes for public deck access
+    # Add methods for public deck access
     $app->add_methods(
         'public_deck_view' => \&public_deck_view,
         'public_deck_create' => \&public_deck_create,
@@ -14,27 +14,7 @@ sub cms_init_request {
         'api_cards' => \&api_cards,
     );
     
-    # Add custom routes
-    if ($app->isa('MT::App::CMS')) {
-        $app->add_route(
-            qr{^/deck/([a-zA-Z0-9]+)/?$} => {
-                handler => \&public_deck_view,
-                share_token => '$1'
-            }
-        );
-        
-        $app->add_route(
-            qr{^/deck-builder/?$} => {
-                handler => \&public_deck_create
-            }
-        );
-        
-        $app->add_route(
-            qr{^/api/cards/?$} => {
-                handler => \&api_cards
-            }
-        );
-    }
+    return 1;
 }
 
 sub public_deck_view {

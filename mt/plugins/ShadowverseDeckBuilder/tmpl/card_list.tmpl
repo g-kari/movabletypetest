@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shadowverse Card Management</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .header { border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 20px; }
+        .actions { margin-bottom: 20px; }
+        .actions a { margin-right: 10px; padding: 8px 15px; background: #007cba; color: white; text-decoration: none; border-radius: 3px; }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
+        .card-item { border: 1px solid #ddd; padding: 10px; border-radius: 5px; }
+        .card-name { font-weight: bold; color: #333; }
+        .card-cost { color: #666; }
+        .card-type { font-style: italic; color: #888; }
+        .no-cards { text-align: center; color: #666; padding: 40px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Shadowverse Card Management</h1>
+        <a href="<$mt:var name="script_url"$>?__mode=sv_deck_list">← Back to Deck List</a>
+    </div>
+    
+    <div class="actions">
+        <a href="<$mt:var name="script_url"$>?__mode=sv_card_edit">Add New Card</a>
+    </div>
+    
+    <h2>Cards (<$mt:var name="card_count" default="0"$>)</h2>
+    
+    <mt:if name="cards">
+        <div class="cards-grid">
+            <mt:loop name="cards">
+                <div class="card-item">
+                    <div class="card-name"><$mt:var name="name"$></div>
+                    <div class="card-cost">Cost: <$mt:var name="cost"$></div>
+                    <div class="card-type"><$mt:var name="type"$> - <$mt:var name="class"$></div>
+                    <mt:if name="attack"><div>ATK: <$mt:var name="attack"$></div></mt:if>
+                    <mt:if name="life"><div>HP: <$mt:var name="life"$></div></mt:if>
+                    <div style="margin-top: 10px;">
+                        <a href="<$mt:var name="script_url"$>?__mode=sv_card_edit&id=<$mt:var name="id"$>">Edit</a>
+                    </div>
+                </div>
+            </mt:loop>
+        </div>
+    <mt:else>
+        <div class="no-cards">
+            <p>No cards found.</p>
+            <a href="<$mt:var name="script_url"$>?__mode=sv_card_edit">Add your first card</a>
+        </div>
+    </mt:if>
+</body>
+</html>
