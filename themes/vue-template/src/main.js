@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import BlogPosts from './components/BlogPosts.vue'
 import Navigation from './components/Navigation.vue'
+import DeckEditor from './components/DeckEditor.vue'
 
 // MovableType Vue Template システム
 class MTVueTemplate {
@@ -35,6 +36,58 @@ class MTVueTemplate {
   mountMainApp(selector) {
     return this.mount(selector, App)
   }
+
+  // デッキエディターのマウント
+  mountDeckEditor(selector, options = {}) {
+    const props = {
+      initialDeck: options.deckData || null,
+      allCards: options.allCards || window.SV_CARDS_DATA || [],
+      savedCards: options.savedCards || window.SV_SAVED_CARDS || []
+    }
+    return this.mount(selector, DeckEditor, props)
+  }
+
+  // パブリックデッキビルダーのマウント
+  mountPublicDeckBuilder(selector, options = {}) {
+    const deckBuilderApp = createApp({
+      components: {
+        DeckEditor
+      },
+      data() {
+        return {
+          allCards: options.allCards || [],
+          savedCards: options.savedCards || [],
+          deckCards: [],
+          deckTitle: options.deckTitle || '',
+          deckDescription: options.deckDescription || '',
+          selectedClass: options.selectedClass || '',
+          isPublic: options.isPublic || false
+        }
+      },
+      methods: {
+        onDeckUpdated(deckCards) {
+          this.deckCards = deckCards;
+          // Emit event for parent components
+          this.$emit('deck-updated', deckCards);
+        }
+      },
+      template: `
+        <deck-editor 
+          :all-cards="allCards"
+          :saved-cards="savedCards"
+          @deck-updated="onDeckUpdated"
+        />
+      `
+    })
+
+    const element = document.querySelector(selector)
+    if (element) {
+      deckBuilderApp.mount(element)
+      this.apps[selector] = deckBuilderApp
+      return deckBuilderApp
+    }
+    return null
+  }
 }
 
 // グローバルに公開
@@ -61,5 +114,26 @@ document.addEventListener('DOMContentLoaded', () => {
   if (navigationElement) {
     const menuData = navigationElement.dataset.menu ? JSON.parse(navigationElement.dataset.menu) : []
     window.MTVueTemplate.mountNavigation('#vue-navigation', menuData)
+  }
+
+  // デッキエディターの自動マウント
+  const deckEditorElement = document.querySelector('#sv-deck-editor')
+  if (deckEditorElement) {
+    const options = {
+      allCards: window.SV_CARDS_DATA || [],
+      savedCards: window.SV_SAVED_CARDS || [],
+      deckData: window.svDeckData || null
+    }
+    window.MTVueTemplate.mountDeckEditor('#sv-deck-editor', options)
+  }
+
+  // パブリックデッキビルダーの自動マウント
+  const publicDeckBuilderElement = document.querySelector('#sv-deck-builder-app')
+  if (publicDeckBuilderElement) {
+    const options = {
+      allCards: window.SV_CARDS_DATA || [],
+      savedCards: window.SV_SAVED_CARDS || []
+    }
+    window.MTVueTemplate.mountPublicDeckBuilder('#sv-deck-builder-app', options)
   }
 })

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Shadowverse Deck Builder - Deck List</title>
+    <mt:var name="html_head" />
+</head>
+<body class="mt-main-content">
+    <mt:var name="html_body_header" />
+    
+    <div class="main-content">
+        <div class="main-content-header">
+            <h1 class="main-content-title">Shadowverse Deck Builder</h1>
+            <div class="main-content-nav">
+                <a href="<mt:var name="script_url">?__mode=sv_deck_edit" class="btn btn-primary">
+                    <mt:var name="create_new_deck" default="新しいデッキを作成" />
+                </a>
+                <a href="<mt:var name="script_url">?__mode=sv_card_list" class="btn btn-default">
+                    <mt:var name="manage_cards" default="カード管理" />
+                </a>
+            </div>
+        </div>
+        
+        <mt:if name="saved">
+            <div class="alert alert-success">
+                <mt:var name="deck_saved" default="デッキが保存されました。" />
+            </div>
+        </mt:if>
+        
+        <mt:if name="deleted">
+            <div class="alert alert-success">
+                <mt:var name="deck_deleted" default="デッキが削除されました。" />
+            </div>
+        </mt:if>
+        
+        <div class="listing-header">
+            <div class="listing-header-content">
+                <h2><mt:var name="your_decks" default="あなたのデッキ" /> (<mt:var name="deck_count" default="0" />)</h2>
+            </div>
+        </div>
+        
+        <mt:if name="decks">
+            <div class="listing">
+                <table class="listing-table">
+                    <thead>
+                        <tr>
+                            <th><mt:var name="title" default="タイトル" /></th>
+                            <th><mt:var name="class" default="クラス" /></th>
+                            <th><mt:var name="cards" default="カード数" /></th>
+                            <th><mt:var name="public" default="公開状態" /></th>
+                            <th><mt:var name="views" default="閲覧数" /></th>
+                            <th><mt:var name="modified" default="更新日時" /></th>
+                            <th><mt:var name="actions" default="操作" /></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <mt:loop name="decks">
+                            <tr>
+                                <td>
+                                    <a href="<mt:var name="script_url">?__mode=sv_deck_edit&id=<mt:var name="id" />">
+                                        <mt:var name="title" />
+                                    </a>
+                                    <mt:if name="description">
+                                        <div class="description"><mt:var name="description" /></div>
+                                    </mt:if>
+                                </td>
+                                <td><mt:var name="class_jp" /></td>
+                                <td><mt:var name="card_count" />枚</td>
+                                <td>
+                                    <mt:if name="is_public">
+                                        <span class="badge badge-success">公開</span>
+                                        <mt:if name="share_url">
+                                            <br><a href="<mt:var name="share_url" />" target="_blank" class="share-link">
+                                                シェアURL
+                                            </a>
+                                        </mt:if>
+                                    <mt:else>
+                                        <span class="badge badge-secondary">非公開</span>
+                                    </mt:if>
+                                </td>
+                                <td><mt:var name="view_count" /></td>
+                                <td><mt:var name="modified_on" /></td>
+                                <td>
+                                    <a href="<mt:var name="script_url">?__mode=sv_deck_edit&id=<mt:var name="id" />" class="btn btn-sm btn-default">
+                                        編集
+                                    </a>
+                                    <a href="<mt:var name="script_url">?__mode=sv_deck_delete&id=<mt:var name="id" />" 
+                                       class="btn btn-sm btn-danger"
+                                       onclick="return confirm('このデッキを削除してもよろしいですか？')">
+                                        削除
+                                    </a>
+                                </td>
+                            </tr>
+                        </mt:loop>
+                    </tbody>
+                </table>
+            </div>
+        <mt:else>
+            <div class="empty-state">
+                <p><mt:var name="no_decks" default="デッキがありません。" /></p>
+                <a href="<mt:var name="script_url">?__mode=sv_deck_edit" class="btn btn-primary">
+                    <mt:var name="create_first_deck" default="最初のデッキを作成する" />
+                </a>
+            </div>
+        </mt:if>
+    </div>
+    
+    <mt:var name="html_body_footer" />
+    
+    <style>
+        .description {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 4px;
+        }
+        .badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        .badge-success {
+            background: #28a745;
+            color: white;
+        }
+        .badge-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        .share-link {
+            font-size: 0.8em;
+            color: #007bff;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+        }
+        .main-content-nav {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</body>
+</html>

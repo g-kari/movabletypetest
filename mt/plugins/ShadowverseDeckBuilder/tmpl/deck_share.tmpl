@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><mt:var name="og_title" /></title>
+    
+    <!-- OGP Meta Tags -->
+    <meta property="og:title" content="<mt:var name="og_title" escape="html" />">
+    <meta property="og:description" content="<mt:var name="og_description" escape="html" />">
+    <meta property="og:url" content="<mt:var name="og_url" escape="html" />">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Shadowverse Deck Builder">
+    
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<mt:var name="og_title" escape="html" />">
+    <meta name="twitter:description" content="<mt:var name="og_description" escape="html" />">
+    
+    <!-- General Meta -->
+    <meta name="description" content="<mt:var name="og_description" escape="html" />">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .deck-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .deck-header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .deck-title {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .deck-class {
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+        
+        .deck-meta {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .meta-item {
+            text-align: center;
+        }
+        
+        .meta-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            display: block;
+        }
+        
+        .meta-label {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .deck-content {
+            padding: 30px;
+        }
+        
+        .deck-description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+            line-height: 1.7;
+        }
+        
+        .cards-section h3 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .cards-list {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .cost-distribution {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .card-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 8px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .card-cost {
+            width: 36px;
+            height: 36px;
+            background: #3498db;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 14px;
+        }
+        
+        .card-info {
+            flex: 1;
+        }
+        
+        .card-name {
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: 2px;
+        }
+        
+        .card-type {
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        .card-count {
+            background: #e74c3c;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        
+        .cost-chart {
+            height: 200px;
+            display: flex;
+            align-items: end;
+            gap: 8px;
+            padding: 20px 0;
+        }
+        
+        .cost-bar {
+            flex: 1;
+            background: linear-gradient(180deg, #3498db, #2980b9);
+            border-radius: 4px 4px 0 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: end;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 5px 2px;
+            min-height: 30px;
+        }
+        
+        .cost-count {
+            margin-bottom: 5px;
+        }
+        
+        .cost-label {
+            background: rgba(0,0,0,0.3);
+            padding: 2px 4px;
+            border-radius: 2px;
+            font-size: 10px;
+        }
+        
+        .share-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-twitter {
+            background: #1da1f2;
+            color: white;
+        }
+        
+        .btn-copy {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .deck-title {
+                font-size: 2em;
+            }
+            
+            .deck-meta {
+                gap: 20px;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .share-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        /* Rarity Colors */
+        .card-item.rarity-bronze {
+            border-left-color: #8d6e63;
+        }
+        
+        .card-item.rarity-silver {
+            border-left-color: #9e9e9e;
+        }
+        
+        .card-item.rarity-gold {
+            border-left-color: #ffc107;
+        }
+        
+        .card-item.rarity-legendary {
+            border-left-color: #ff9800;
+            background: linear-gradient(90deg, #fff8e1, #ffffff);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="deck-card">
+            <div class="deck-header">
+                <h1 class="deck-title"><mt:var name="deck.title" escape="html" /></h1>
+                <div class="deck-class"><mt:var name="deck.class_jp" />デッキ</div>
+                <div class="deck-meta">
+                    <div class="meta-item">
+                        <span class="meta-value"><mt:var name="deck.card_count" /></span>
+                        <span class="meta-label">カード</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-value"><mt:var name="deck.view_count" /></span>
+                        <span class="meta-label">閲覧数</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-value"><mt:var name="deck.author_name" escape="html" /></span>
+                        <span class="meta-label">作成者</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="deck-content">
+                <mt:if name="deck.description">
+                    <div class="deck-description">
+                        <mt:var name="deck.description" escape="html" />
+                    </div>
+                </mt:if>
+                
+                <div class="cards-section">
+                    <h3>カード構成</h3>
+                    <div class="cards-grid">
+                        <div>
+                            <h4>デッキリスト</h4>
+                            <div class="cards-list">
+                                <mt:loop name="cards">
+                                    <div class="card-item rarity-<mt:var name="card.rarity" />">
+                                        <div class="card-cost"><mt:var name="card.cost" /></div>
+                                        <div class="card-info">
+                                            <div class="card-name"><mt:var name="card.name" escape="html" /></div>
+                                            <div class="card-type"><mt:var name="card.type_jp" /></div>
+                                        </div>
+                                        <div class="card-count"><mt:var name="count" /></div>
+                                    </div>
+                                </mt:loop>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4>コスト分布</h4>
+                            <div class="cost-distribution">
+                                <div class="cost-chart">
+                                    <mt:loop name="cost_distribution">
+                                        <div class="cost-bar" style="height: <mt:var name="__value__" mul="8" />px;">
+                                            <span class="cost-count"><mt:var name="__value__" /></span>
+                                            <span class="cost-label"><mt:var name="__key__" /></span>
+                                        </div>
+                                    </mt:loop>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="share-section">
+                    <h3>このデッキをシェア</h3>
+                    <p>このデッキをSNSでシェアして友達と共有しよう！</p>
+                    <div class="share-buttons">
+                        <a href="https://twitter.com/intent/tweet?text=<mt:var name="deck.title" escape="url" />%20-%20<mt:var name="deck.class_jp" />デッキ&url=<mt:var name="og_url" escape="url" />" 
+                           class="btn btn-twitter" target="_blank">
+                            🐦 Twitterでシェア
+                        </a>
+                        <button class="btn btn-copy" onclick="copyToClipboard()">
+                            📋 URLをコピー
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>Powered by Shadowverse Deck Builder</p>
+    </div>
+    
+    <script>
+        function copyToClipboard() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(function() {
+                alert('URLがクリップボードにコピーされました！');
+            }, function(err) {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = url;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('URLがクリップボードにコピーされました！');
+            });
+        }
+    </script>
+</body>
+</html>
