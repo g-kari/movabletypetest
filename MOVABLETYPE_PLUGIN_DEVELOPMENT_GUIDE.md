@@ -29,10 +29,12 @@ MovableTypeのプラグインは、CMSの機能を拡張するためのモジュ
 - **外部サービス連携**: API連携やウェブサービスとの統合
 - **コンテンツ処理**: 記事やページの自動処理・変換
 
+*参考: [MovableType プラグイン開発リファレンス](https://manual.movabletype.jp/developer/plugins/)*
+
 ### プラグイン開発の前提知識
 
 #### 必要なスキル
-- **Perl**: MovableTypeの主要言語
+- **Perl**: MovableTypeの主要言語（[Perl.org](https://www.perl.org/) でPerl学習リソースを確認）
 - **HTML/CSS/JavaScript**: フロントエンド開発
 - **SQL**: データベース操作
 - **YAML**: 設定ファイル記述
@@ -90,6 +92,10 @@ CSS、JavaScript、画像などの静的ファイルを配置。
 ---
 
 ## 📝 設定ファイル (config.yaml)
+
+`config.yaml`はプラグインの中核となる設定ファイルです。プラグインのメタデータ、設定項目、データベーススキーマ、コールバックなどすべての定義を記述します。
+
+*参考: [MovableType プラグイン設定ファイル仕様](https://manual.movabletype.jp/developer/plugins/config.html)*
 
 ### 基本構造
 
@@ -269,7 +275,9 @@ sub custom_method {
 
 ### 管理画面テンプレート
 
-MovableTypeの管理画面テンプレートは独自の形式を使用します。
+MovableTypeの管理画面テンプレートは独自の形式を使用します。テンプレートタグやディレクティブを活用して動的なコンテンツを生成できます。
+
+*参考: [MovableType テンプレートタグリファレンス](https://manual.movabletype.jp/appendices/tags/)*
 
 #### リスト画面テンプレート例
 
@@ -365,7 +373,9 @@ MovableTypeの管理画面テンプレートは独自の形式を使用します
 
 ### コールバックシステム
 
-MovableTypeはコールバックシステムを通じて、様々なタイミングでカスタム処理を実行できます。
+MovableTypeはコールバックシステムを通じて、様々なタイミングでカスタム処理を実行できます。これにより、CMSの動作に独自の処理を組み込むことが可能です。
+
+*参考: [MovableType コールバック・フックシステム](https://manual.movabletype.jp/developer/plugins/callbacks.html)*
 
 #### 主要なコールバック
 
@@ -430,6 +440,10 @@ sub post_save_entry {
 ---
 
 ## 🗄️ データベース統合
+
+MovableTypeは独自のORM（Object-Relational Mapping）システムである`MT::Object`を提供しています。これにより、データベース操作を直感的に記述できます。
+
+*参考: [MovableType データベースオブジェクトシステム](https://manual.movabletype.jp/developer/plugins/object.html)*
 
 ### オブジェクトの基本操作
 
@@ -517,7 +531,9 @@ sub upgrade_to_1_1 {
 
 ## 📚 実践例: 既存プラグインの解説
 
-このプロジェクトには2つの実践的なプラグインが含まれています。
+このプロジェクトには2つの実践的なプラグインが含まれています。これらの実例は本リポジトリ内の実際のコードに基づいています。
+
+*注: 以下の解説は本プロジェクト（[g-kari/movabletypetest](https://github.com/g-kari/movabletypetest)）内の実際のプラグインソースコードを参考にしています。*
 
 ### 1. ShadowverseDeckBuilder プラグイン
 
@@ -605,6 +621,11 @@ config_settings:
 
 ### 1. セキュリティ
 
+セキュリティはWebアプリケーション開発において最重要事項です。MovableTypeプラグイン開発でも適切なセキュリティ対策を実装する必要があります。
+
+*参考: [MovableType セキュリティベストプラクティス](https://manual.movabletype.jp/developer/security/)*
+*参考: [OWASP Top 10](https://owasp.org/www-project-top-ten/) - Webアプリケーションセキュリティの国際標準*
+
 #### 入力値の検証
 ```perl
 sub validate_input {
@@ -637,6 +658,10 @@ sub check_permission {
 ```
 
 ### 2. パフォーマンス
+
+データベースクエリの最適化とキャッシュの活用は、プラグインのパフォーマンスに大きく影響します。
+
+*参考: [データベースパフォーマンス最適化](https://manual.movabletype.jp/developer/performance/) - MovableType公式ガイド*
 
 #### データベースクエリの最適化
 ```perl
@@ -689,6 +714,11 @@ phrases:
 
 ### 4. テスト
 
+プラグインの品質を確保するため、適切なテストの実装は不可欠です。
+
+*参考: [Test::More](https://metacpan.org/pod/Test::More) - Perl標準テストフレームワーク*
+*参考: [MovableType テスト手法](https://manual.movabletype.jp/developer/testing/) - 公式テストガイド*
+
 #### 単体テストの例
 ```perl
 # t/your_plugin.t
@@ -740,31 +770,39 @@ sub safe_operation {
 ## 🔗 参考リンク
 
 ### 公式ドキュメント
-- [MovableType開発者ドキュメント](https://www.movabletype.org/documentation/) - 公式開発ガイド
-- [MovableType Plugin Development Guide](https://www.movabletype.org/documentation/plugin-development/) - プラグイン開発公式ガイド
-- [MovableType API Reference](https://www.movabletype.org/documentation/developer/api/) - APIリファレンス
-- [Template Tags Reference](https://www.movabletype.org/documentation/appendices/tags/) - テンプレートタグリファレンス
+- [MovableType 公式サイト](https://www.movabletype.jp/) - シックス・アパート公式MovableTypeサイト
+- [MovableType 7 開発者ガイド](https://manual.movabletype.jp/developer/) - 公式開発者向けマニュアル
+- [MovableType プラグイン開発リファレンス](https://manual.movabletype.jp/developer/plugins/) - プラグイン開発公式ガイド
+- [MovableType テンプレートタグリファレンス](https://manual.movabletype.jp/appendices/tags/) - テンプレートタグ完全リファレンス
+- [MovableType データベーススキーマ](https://manual.movabletype.jp/appendices/database-schema.html) - データベース構造詳細
 
-### プラグイン配布サイト
-- [MovableType.org Plugins](https://plugins.movabletype.org/) - 公式プラグインディレクトリ
-- [Six Apart Plugin Directory](https://plugins.sixapart.com/) - Six Apart公式プラグインサイト
+### プラグイン配布・情報サイト
 - [GitHub - MovableType関連](https://github.com/topics/movabletype) - GitHubのMovableTypeプロジェクト
+- [MovableType.jp - プラグイン](https://www.movabletype.jp/plugins/) - 公式プラグイン情報
+- [PowerCMS](https://www.powercms.jp/) - MovableTypeベースのCMSとプラグイン情報
 
 ### 技術情報・チュートリアル
-- [MovableType Developer Blog](https://www.movabletype.org/blog/) - 開発者向けブログ
-- [MT::Object Documentation](https://www.movabletype.org/documentation/developer/plugins/object.html) - オブジェクトシステム
-- [Template System Guide](https://www.movabletype.org/documentation/developer/plugins/template-tags.html) - テンプレートシステム詳細
-- [Callback System](https://www.movabletype.org/documentation/developer/plugins/callbacks.html) - コールバックシステム
+- [アルファサード技術ブログ](https://www.alfasado.net/blog/) - MovableType開発会社による技術情報
+- [シックス・アパート技術ブログ](https://tech.sixapart.jp/) - MovableType開発元の技術情報
+- [MovableType 開発Tips集](https://wiki.movabletype.org/MovableType_Developer_Tips) - コミュニティWiki
+- [CPAN MT::* モジュール](https://metacpan.org/search?q=MT%3A%3A) - MovableType関連PerlモジュールCPANリスト
 
 ### コミュニティ・サポート
-- [MovableType Community Forum](https://movabletype.org/community/) - コミュニティフォーラム
+- [MovableType Community](https://community.movabletype.org/) - 公式コミュニティフォーラム
 - [Stack Overflow - MovableType](https://stackoverflow.com/questions/tagged/movabletype) - 技術的質問・回答
-- [MovableType Facebook Group](https://www.facebook.com/groups/movabletype/) - Facebookコミュニティ
+- [MovableType Users Group Japan](https://www.facebook.com/groups/MTUserJapan/) - 日本のユーザーグループ
+- [Qiita - MovableType](https://qiita.com/tags/movabletype) - 日本語技術記事プラットフォーム
 
 ### Perl関連リソース
 - [Perl.org](https://www.perl.org/) - Perl公式サイト
 - [CPAN](https://metacpan.org/) - Perlモジュールライブラリ
 - [Perl Documentation](https://perldoc.perl.org/) - Perl公式ドキュメント
+- [Modern Perl](http://modernperlbooks.com/) - モダンPerl開発手法
+
+### 開発ツール・リソース
+- [MovableType Docker環境](https://github.com/movabletype/docker-mt) - 公式Docker環境
+- [MT-DevTools](https://github.com/movabletype/mt-devtools) - 開発支援ツール
+- [Melody Project](https://github.com/openmelody/melody) - MovableType派生オープンソースプロジェクト
 
 ---
 
