@@ -24,7 +24,8 @@ docker-compose exec -T movabletype bash -c "
 cd /var/www/cgi-bin/mt
 # Fix ObjectDriver config by setting proper database driver
 export MT_CONFIG=/var/www/cgi-bin/mt/mt-config.cgi
-perl tools/upgrade --force --non-interactive || echo 'Database initialization completed'
+# Run upgrade with correct syntax - create admin user
+perl tools/upgrade --name admin || echo 'Database initialization completed'
 "
 
 echo "Database initialization completed!"

@@ -38,6 +38,9 @@ echo "Running MovableType configuration fix..."
 echo "Running database initialization..."
 ./scripts/init-database.sh
 
+echo "Creating admin user..."
+./scripts/create-admin-user.sh
+
 echo "Running ShadowverseDeckBuilder plugin setup..."
 ./scripts/setup-shadowverse-plugin.sh
 
