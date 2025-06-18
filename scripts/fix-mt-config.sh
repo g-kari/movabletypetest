@@ -34,6 +34,19 @@ LogConfig /tmp/mt.log
 PluginPath plugins
 ThemesDirectory themes
 
+# Security settings
+CookieSecret MTSecretCookieKey2024
+SecretToken MTSecretToken2024
+
+# Session management - Disable for troubleshooting
+#SessionDriver DB::DBI
+#SessionOptions timeout=3600
+
+# Security headers - Disable for troubleshooting
+RequiredHeaders 0
+CSRFProtection 0
+XMLRPCAllowedXssDomains *
+
 # Email settings
 MailTransfer sendmail
 SendMailPath /usr/sbin/sendmail
@@ -43,6 +56,11 @@ ProcessMemoryCommand /bin/ps -o rss=
 
 # Debug settings
 DebugMode 2
+
+# Additional security
+DisableNotificationPings 1
+AllowComments 0
+AllowPings 0
 EOF
 
 # Set proper permissions
