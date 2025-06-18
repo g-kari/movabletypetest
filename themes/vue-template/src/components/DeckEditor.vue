@@ -103,6 +103,7 @@
 <script>
 export default {
   name: 'DeckEditor',
+  emits: ['deck-updated'],
   props: {
     initialDeck: {
       type: Object,
@@ -249,6 +250,9 @@ export default {
       if (cardsDataField) {
         cardsDataField.value = JSON.stringify(this.deckCards)
       }
+      
+      // Emit deck updated event for parent components
+      this.$emit('deck-updated', this.deckCards)
     }
   },
   
