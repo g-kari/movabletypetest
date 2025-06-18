@@ -1,0 +1,85 @@
+id: ShadowverseDeckBuilder
+name: Shadowverse Deck Builder
+version: 1.0.0
+description: Shadowverseのデッキ構築システム - Vue.jsベースのインタラクティブなデッキエディター
+author_name: G-Kari
+author_link: https://github.com/g-kari
+plugin_link: https://github.com/g-kari/movabletypetest
+doc_link: https://github.com/g-kari/movabletypetest
+
+schema_version: 1.0
+
+object_types:
+  svcard:
+    card_id: string(50) not null
+    name: string(255) not null
+    name_en: string(255)
+    cost: integer not null
+    attack: integer
+    life: integer
+    type: string(20) not null
+    class: string(20) not null
+    rarity: string(20) not null
+    set_name: string(100)
+    description: text
+    image_url: string(500)
+    
+  svdeck:
+    title: string(255) not null
+    description: text
+    class: string(20) not null
+    class_jp: string(20) not null
+    cards_data: text not null
+    author_id: integer not null
+    author_name: string(255) not null
+    is_public: integer not null default 0
+    share_token: string(32)
+    view_count: integer not null default 0
+    like_count: integer not null default 0
+    created_on: datetime not null
+    modified_on: datetime not null
+
+callbacks:
+  MT::App::CMS::init_request: $ShadowverseDeckBuilder::ShadowverseDeckBuilder::Callback::cms_init_request
+
+applications:
+  cms:
+    menus:
+      tools:
+        shadowverse_deck_builder:
+          label: 'Shadowverse Deck Builder'
+          order: 800
+          mode: 'sv_deck_list'
+          permission: create_post
+    methods:
+      sv_deck_list: $ShadowverseDeckBuilder::ShadowverseDeckBuilder::CMS::deck_list_mode
+      sv_deck_edit: $ShadowverseDeckBuilder::ShadowverseDeckBuilder::CMS::deck_edit_mode
+      sv_deck_save: $ShadowverseDeckBuilder::ShadowverseDeckBuilder::CMS::deck_save_mode
+      sv_deck_delete: $ShadowverseDeckBuilder::ShadowverseDeckBuilder::CMS::deck_delete_mode
+      sv_card_list: $ShadowverseDeckBuilder::ShadowverseDeckBuilder::CMS::card_list_mode
+      sv_card_edit: $ShadowverseDeckBuilder::ShadowverseDeckBuilder::CMS::card_edit_mode
+      sv_card_save: $ShadowverseDeckBuilder::ShadowverseDeckBuilder::CMS::card_save_mode
+
+template_tags:
+  function:
+    SVDeckList: $ShadowverseDeckBuilder::ShadowverseDeckBuilder::Tags::_hdlr_sv_deck_list
+    SVDeckDetail: $ShadowverseDeckBuilder::ShadowverseDeckBuilder::Tags::_hdlr_sv_deck_detail
+    SVCardList: $ShadowverseDeckBuilder::ShadowverseDeckBuilder::Tags::_hdlr_sv_card_list
+    SVDeckBuilder: $ShadowverseDeckBuilder::ShadowverseDeckBuilder::Tags::_hdlr_sv_deck_builder
+
+config_settings:
+  SVDeckBuilderEnable:
+    type: CHECKBOX
+    label: 'Enable Shadowverse Deck Builder'
+    hint: 'Shadowverseデッキビルダー機能を有効にします'
+    default: 1
+  SVDeckBuilderPublicAccess:
+    type: CHECKBOX
+    label: 'Allow Public Deck Creation'
+    hint: '一般ユーザーがデッキを作成できるようにします'
+    default: 1
+  SVDeckBuilderMaxDecksPerUser:
+    type: TEXTINPUT
+    label: 'Max Decks Per User'
+    hint: 'ユーザーが作成できる最大デッキ数'
+    default: 50

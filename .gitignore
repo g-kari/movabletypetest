@@ -4,6 +4,7 @@
 !/mt/plugins/
 /mt/plugins/*
 !/mt/plugins/CloudFrontClearCaches/
+!/mt/plugins/ShadowverseDeckBuilder/
 /mt-static/*
 !/mt-static/.gitkeep
 /uploads/*
